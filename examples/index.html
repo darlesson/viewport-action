@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Load on Viewport Examples</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <style>
+        #six-charts-section {
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
+        #six-charts-section .segment {
+            height: 18em;
+        }
+
+        body > .ui.container {
+            margin-top: 3em;
+            margin-bottom: 4em;
+        }
+
+        body > .ui.container > .ui.segment {
+            height: 36em;
+        }
+
+        .debug-element {
+            position: fixed;
+            border: 4px dashed rgba(128, 0, 0, 1);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui container">
+
+        <h1 class="ui header">Load on Viewport Examples</h1>
+
+        <h3 class="ui header">Load on DOM Load</h3>
+
+        <div id="item-1" class="ui segment">
+            <div class="ui active loader"></div>
+        </div>
+
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt et sapien
+            eget sagittis. Integer sollicitudin consequat diam vitae varius. Aenean dictum,
+            mi nec sodales lacinia, erat elit pulvinar lacus, quis gravida sem felis at libero.
+            Sed nec dui ante. In risus erat, egestas et hendrerit at, commodo ut ipsum. Praesent 
+            it amet libero ullamcorper, luctus diam eu, porttitor eros. Fusce facilisis erat
+            diam, at varius neque malesuada vitae.
+        </p>
+        <p>
+            In pellentesque pellentesque erat eu tincidunt. Phasellus tempus nulla eu ex
+            efficitur blandit. Morbi imperdiet erat turpis, id congue nisl consectetur sed.
+            Vestibulum tempus quam id turpis ultricies lacinia. Proin sapien tellus, volutpat
+            eu purus a, molestie aliquam velit. Sed dignissim aliquam purus. Nam at ante vel
+            nisi porta efficitur a nec nulla. Donec mi velit, convallis non iaculis vel,
+            ullamcorper sit amet ipsum. Cras imperdiet, sapien id sollicitudin efficitur,
+            turpis purus laoreet quam, sit amet ullamcorper diam elit accumsan metus. Integer
+            a consectetur justo. Integer dapibus aliquam quam, faucibus ullamcorper lorem
+            iaculis pretium. Vivamus consectetur, tellus nec tempor facilisis, tortor velit
+            sollicitudin purus, eget gravida risus lectus vel massa. Duis ultricies a odio
+            a suscipit. Sed sit amet mauris et ligula condimentum mattis.
+        </p>
+        <p>
+            Maecenas eu semper mauris. Cras et lobortis ligula. Fusce molestie iaculis nibh,
+            in venenatis massa porttitor sit amet. Morbi eget mi ac elit fermentum efficitur
+            vel sit amet turpis. Sed rutrum, diam sit amet blandit maximus, nisi risus
+            vestibulum leo, in aliquet elit eros nec est. Curabitur tristique diam non
+            mauris aliquet, ut rutrum diam efficitur. Donec bibendum, libero et dictum
+            cursus, sapien lorem euismod lorem, eu porta metus est vel elit. Orci varius
+            natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            Donec quis dapibus nunc.
+        </p>
+        <p>
+            Nullam dapibus ornare tincidunt. Aenean accumsan magna purus, ut euismod eros
+            vulputate a. Duis et tellus eu lectus iaculis mollis sed at est. Ut ac mattis
+            leo, eu aliquet tortor. Duis consequat, eros ut ultrices feugiat, tellus ex
+            sollicitudin ante, in pellentesque enim nisl et purus. Mauris accumsan dapibus
+            ex ac scelerisque. Donec ullamcorper vel lorem sit amet consequat. Fusce sed
+            dui enim. Mauris at congue turpis, a posuere massa. In non euismod dui, sit
+            amet vulputate odio. Nulla tempor pellentesque nunc id mollis. Nullam at quam
+            vitae nisi efficitur sollicitudin. Praesent imperdiet, nisl bibendum porttitor
+            finibus, diam nibh sollicitudin velit, ac finibus sem augue eu lorem. Praesent
+            dictum felis vitae felis ullamcorper, id volutpat odio aliquet. In consequat
+            pretium leo eu condimentum. In suscipit pulvinar magna non imperdiet.
+        </p>
+
+        <h3 class="ui header">Multiple Items</h3>
+
+        <div id="six-charts-section" class="ui three column doubling stackable grid container">
+            <div class="column">
+                <div id="item-2" class="ui segment">
+                    <div class="ui active loader"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div id="item-3" class="ui segment">
+                    <div class="ui active loader"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div id="item-4" class="ui segment">
+                    <div class="ui active loader"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div id="item-5" class="ui segment">
+                    <div class="ui active loader"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div id="item-6" class="ui segment">
+                    <div class="ui active loader"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div id="item-7" class="ui segment">
+                    <div class="ui active loader"></div>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            Mauris iaculis, magna eu tempor efficitur, mauris elit pellentesque nunc, id
+            pharetra enim metus ullamcorper urna. Nulla facilisi. Curabitur sollicitudin
+            mattis nisi, eget rutrum eros rutrum vel. Suspendisse libero nunc, porta non
+            lectus vel, laoreet placerat felis. Quisque laoreet dapibus neque, at ultrices
+            arcu ornare id. Pellentesque habitant morbi tristique senectus et netus et
+            malesuada fames ac turpis egestas. Integer sit amet lacinia mauris, ultrices
+            pretium lacus. Proin nec nibh nulla. Duis sed ligula nisi.
+        </p>
+        <p>
+            Vivamus gravida odio nec lectus luctus cursus. Proin leo nunc, porta vel
+            tempor nec, varius at massa. Phasellus id dui sapien. In leo leo, tempor
+            sit amet ultricies in, porttitor eget magna. Suspendisse sed massa finibus,
+            vehicula neque id, commodo tortor. Sed sit amet convallis neque. Praesent arcu
+            lacus, euismod vitae augue vel, interdum euismod quam. Nam eget tempus quam,
+            sit amet consectetur magna. Vivamus eget sodales nibh, finibus lacinia risus.
+            Proin gravida sollicitudin pulvinar.
+        </p>
+        <p>
+            Suspendisse ornare ipsum et viverra pretium. Nulla quis libero et lacus bibendum
+            posuere. Suspendisse imperdiet condimentum dolor at faucibus. Nunc sagittis ut
+            tellus elementum hendrerit. In leo lorem, tempor ut sodales ac, ultricies et
+            purus. Donec quam neque, iaculis eget libero in, blandit bibendum ligula.
+            Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas quis
+            vehicula urna. Pellentesque auctor lorem quis dui consequat, eget accumsan
+            risus malesuada.
+        </p>
+        <p>
+            Nulla vel sagittis eros, consequat imperdiet tortor. Donec varius lobortis
+            vehicula. Sed venenatis semper quam a consectetur. Quisque posuere a orci ac
+            tempus. Donec ut molestie nibh. Sed maximus, ligula aliquam maximus varius,
+            massa est semper nisi, ac iaculis justo justo et purus. Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique
+            senectus et netus et malesuada fames ac turpis egestas. Sed consectetur urna
+            non dui ultrices hendrerit. Duis porttitor ante sit amet leo auctor, quis
+            consectetur dolor semper. Aliquam sodales eros id sodales pellentesque.
+            Pellentesque eget lacinia enim.
+        </p>
+        <p>
+            Morbi ac nunc aliquet, dictum neque ac, pellentesque risus. Vivamus nunc
+            elit, consequat in tincidunt sed, mollis ac ex. Nulla in mauris scelerisque,
+            aliquam metus pharetra, vestibulum arcu. Donec ultrices malesuada erat auctor
+            scelerisque. Nam convallis facilisis mi, consequat mattis quam tempus at.
+            Vestibulum quam mi, rutrum vitae libero nec, mattis scelerisque risus. Aenean
+            eget pulvinar felis. Ut finibus enim augue, id semper augue suscipit ut.
+        </p>
+        <p>
+            Sed ligula orci, consectetur sit amet hendrerit eu, maximus nec arcu. Aliquam
+            mattis enim sed dolor venenatis rutrum. Aenean tincidunt, lorem sed eleifend
+            ullamcorper, libero augue bibendum purus, et imperdiet urna velit ut dolor.
+            Nam non eros nisi. Aenean id tortor felis. Nullam aliquet diam sed rhoncus
+            lobortis. Praesent faucibus ac ante id ullamcorper. Sed pretium felis eget
+            elit maximus pellentesque. Integer enim nisi, dapibus et finibus et, mattis sit
+            amet nulla. Integer semper tincidunt vulputate. Cras venenatis nulla sed
+            orci tempus condimentum. Nullam commodo augue ut tristique scelerisque. Phasellus
+            rhoncus, mi sit amet commodo tempus, tellus tellus pretium purus, a tempus nisl
+            purus lacinia sem. Proin eu ultrices nisi, eget maximus velit. Quisque egestas
+            faucibus sagittis.
+        </p>
+
+        <h3 class="ui header">Single Item</h3>
+
+        <div id="item-8" class="ui segment">
+            <div class="ui active loader"></div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    
+    <script src="examples.js"></script>
+
+</body>
+</html>

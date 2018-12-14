@@ -1,0 +1,18 @@
+{
+    "name": "viewport-action",
+    "version": "0.1.0-alpha.0",
+    "scripts": {
+        "prepare": "webpack",
+        "start:dev": "webpack-dev-server"
+    },
+    "dependencies": {
+        "@amcharts/amcharts4": "latest"
+    },
+    "devDependencies": {
+        "webpack": "4.27.1",
+        "webpack-cli": "3.1.2",
+        "webpack-dev-server": "3.1.10",
+        "html-webpack-plugin": "3.2.0",
+        "source-map-loader": "0.2.4"
+    }
+}
