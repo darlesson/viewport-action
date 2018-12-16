@@ -1,4 +1,4 @@
-import ViewPortEvent from './viewPortEvent';
+import ViewportEvent from './viewportEvent';
 
 let timeout = 0;
 
@@ -11,7 +11,7 @@ const items = [];
 
 const createEvent = (element, e, details) => {
 
-    return new ViewPortEvent(e, {
+    return new ViewportEvent(e, {
         target: element,
         detail: details
     });

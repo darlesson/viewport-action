@@ -1,6 +1,12 @@
-# View Port Action
+# Viewport Action
 
 Provides a way with extra configuration options to execute a handler when a given element is on view.
+
+Few things to know:
+
+* It checks when an element is on view as soon as it's added to `viewPortAction`.
+* It skips all elements that are not on view at the moment the event triggers the handler.
+This means it will not call the handlers for elements that where just scrolled over.
 
 ## Installation
 
@@ -27,7 +33,7 @@ viewPortAction.add(document.getElementById('selector'), function (e) { /* Code h
 
 #### The event object
 
-The event object is an instance of the custom `ViewPortEvent` class. It returns details that can be used to
+The event object is an instance of the custom `ViewportEvent` class. It returns details that can be used to
 determine the conditions to change the element bound to the handler.
 
 ```javascript

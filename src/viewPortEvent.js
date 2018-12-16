@@ -1,4 +1,4 @@
-class ViewPortEvent {
+class ViewportEvent {
 
     constructor (e, options) {
 
@@ -36,4 +36,4 @@ class ViewPortEvent {
     }
 }
 
-export default ViewPortEvent;
+export default ViewportEvent;
