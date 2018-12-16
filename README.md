@@ -12,6 +12,89 @@ Provides a way with extra configuration options to execute a handler when a give
 
 ## Usage
 
+#### Bind a handler to an element
+
+You can add elements or selectors with the handlers. The `add` method waits for `whenDocumentReady`
+to execute a callback when the document is ready. Only one element can be bound per handler.
+
+```javascript
+viewPortAction.add('#selector', function (e) { /* Code here */ });
+
+// or
+
+viewPortAction.add(document.getElementById('selector'), function (e) { /* Code here */ });
+```
+
+#### The event object
+
+The event object is an instance of the custom `ViewPortEvent` class. It returns details that can be used to
+determine the conditions to change the element bound to the handler.
+
+```javascript
+{
+    // The event name.
+    type: 'viewport',
+    // Resize or scroll event instances.
+    originalEvent: event,
+    // The element bound with the handler.
+    target: element,
+    // The same as target.
+    currentTarget: element,
+    // The same as target.
+    srcElement: element,
+    // The timeStamp from `originalEvent.timeStamp`.
+    timeStamp: 345,
+    // The event detail object.
+    detail: {
+        // The element's area visible on the viewport
+        areaAvailable: 318425.015625,
+        // The space between the bottom of the viewport and the bottom
+        // of the element while in the viewport.
+        availableTop: 0,
+        // The space between the top of the viewport and the top of the
+        // element while in the viewport.
+        availableBottom: 440.421875,
+        // The element's height shown in the viewport.
+        availableHeight: 440.421875,
+        // The space between the left of the viewport and the left of the
+        // element while in the viewport.
+        availableLeft: 118,
+        // The space between the right of the viewport and the right of the
+        // element while in the viewport.
+        availableRight: 841,
+        // The element's width shown in the viewport.
+        availableWidth: 723,
+        // The same as `element.getBoundingClientRect().top`.
+        top: -63.578125,
+        // The same as `element.getBoundingClientRect().bottom`.
+        bottom: 440.421875,
+        // The same as `element.getBoundingClientRect().height`.
+        height: 504,
+        // The same as `element.getBoundingClientRect().left`.
+        left: 118,
+        // The same as `element.getBoundingClientRect().right`.
+        right: 841,
+        // The same as `element.getBoundingClientRect().width`.
+        width: 723
+    }
+}
+```
+
+#### Setting options
+
+Below are some options that can be passed when adding the element and handler and their default values.
+
+```javascript
+const options = {
+    // How long the handler will wait after the original event stops triggering.
+    wait: 100,
+    // Whether to unbind the handler after executed for the first time.
+    once: false
+};
+
+viewPortAction.add('#selector', function (e) { /* Code here */ }, options);
+```
+
 #### Executing the handler once
 
 You can have the handler unbinding on the first time the element is on the viewport.
@@ -35,7 +118,7 @@ viewPortAction.add('#selector', function (e) {
 
     // Load an image inside the element when the area visible is bigger
     // than 1000 pixels.
-    if (e.detail.area > 1000) {
+    if (e.detail.areaAvailable > 1000) {
 
         e.target.innerText = 'Element on viewport.';
 

@@ -4,7 +4,6 @@ let timeout = 0;
 
 const defaultOptions = {
     wait: 100,
-    skipWhenNotInView: true,
     once: false
 };
 
@@ -89,8 +88,6 @@ const viewPortAction = {
      * let options = {
      *     // How long it should wait to call the callback. Defaults to 0.
      *     wait: 100,
-     *     // Skip calling the callback if the element moves out of the viewport when the wait is over. Defaults to true.
-     *     skipWhenNotInView: true,
      *     // Whether to trigger the callback just once. Defaults to false.
      *     once: false,
      *     // The document the element will be checked against. Defaults to window.document.
@@ -116,7 +113,6 @@ const viewPortAction = {
 
             options = typeof options === 'object' && !Array.isArray(options) ? {
                 wait: typeof options.wait === 'number' ? options.wait : defaultOptions.wait,
-                skipWhenNotInView: typeof options.skipWhenNotInView ? options.skipWhenNotInView : defaultOptions.skipWhenNotInView,
                 once: typeof options.once === 'boolean' ? options.once : defaultOptions.once
             } : defaultOptions;
 
