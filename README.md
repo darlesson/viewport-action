@@ -18,6 +18,10 @@ npm i viewport-action
 
 ### Using CDN
 
+```html
+<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.1.2"></script>
+```
+
 ### Download files
 
 ## Usage
