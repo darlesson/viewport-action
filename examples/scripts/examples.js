@@ -44,34 +44,54 @@ window.addEventListener('scroll', removeVisualDebug, false);
 
 let showByArea = (e) => {
 
-    e.target.innerText = 'Loaded';
-    e.target.classList.add('inverted', 'blue');
+    if (e.detail.availableArea > 10) {
 
-    visualDebug(e);
+        e.target.innerText = 'Loaded';
+        e.target.classList.add('inverted', 'blue');
+
+        visualDebug(e);
+
+        e.removeHandler();
+    }
 }
 
 let showByVerticalPixels = (e) => {
 
-    e.target.innerText = 'Loaded';
-    e.target.classList.add('inverted', 'orange');
+    if (e.detail.availableHeight > 10) {
 
-    visualDebug(e);
+        e.target.innerText = 'Loaded';
+        e.target.classList.add('inverted', 'orange');
+
+        visualDebug(e);
+
+        e.removeHandler();
+    }
 }
 
 let showByHorizontalPixels = (e) => {
 
-    e.target.innerText = 'Loaded';
-    e.target.classList.add('inverted', 'green');
+    if (e.detail.availableWidth > 10) {
 
-    visualDebug(e);
+        e.target.innerText = 'Loaded';
+        e.target.classList.add('inverted', 'green');
+
+        visualDebug(e);
+
+        e.removeHandler();
+    }
 }
 
+// Using selectors
 viewPortAction.add('#item-1', showByArea);
 viewPortAction.add('#item-2', showByArea);
 viewPortAction.add('#item-3', showByArea);
 viewPortAction.add('#item-4', showByVerticalPixels);
 
-viewPortAction.add(document.getElementById('item-5'), showByVerticalPixels);
+// Using elements
+viewPortAction.add(document.getElementById('item-5'), showByVerticalPixels, {
+    once: true
+});
+
 viewPortAction.add(document.getElementById('item-6'), showByVerticalPixels);
 viewPortAction.add(document.getElementById('item-7'), showByHorizontalPixels);
 viewPortAction.add(document.getElementById('item-8'), showByHorizontalPixels);

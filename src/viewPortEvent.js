@@ -5,6 +5,7 @@ class ViewportEvent {
         this._originalEvent = e;
         this._detail = options.detail;
         this._target = options.target;
+        this._removeHandler = options.removeHandler;
     }
 
     get type () {
@@ -33,6 +34,10 @@ class ViewportEvent {
 
     get timeStamp () {
         return this.originalEvent.timeStamp;
+    }
+
+    removeHandler () {
+        this._removeHandler();
     }
 }
 

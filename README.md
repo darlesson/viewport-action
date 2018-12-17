@@ -53,7 +53,7 @@ determine the conditions to change the element bound to the handler.
     // The event detail object.
     detail: {
         // The element's area visible on the viewport
-        areaAvailable: 318425.015625,
+        availableArea: 318425.015625,
         // The space between the bottom of the viewport and the bottom
         // of the element while in the viewport.
         availableTop: 0,
@@ -124,7 +124,7 @@ viewPortAction.add('#selector', function (e) {
 
     // Load an image inside the element when the area visible is bigger
     // than 1000 pixels.
-    if (e.detail.areaAvailable > 1000) {
+    if (e.detail.availableArea > 1000) {
 
         e.target.innerText = 'Element on viewport.';
 

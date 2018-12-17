@@ -9,13 +9,29 @@ const defaultOptions = {
 
 const items = [];
 
-const createEvent = (element, e, details) => {
+const createEvent = (element, e, details, removeHandler) => {
 
     return new ViewportEvent(e, {
         target: element,
-        detail: details
+        detail: details,
+        removeHandler: removeHandler
     });
 }
+
+const removeMethod = function (item) {
+
+    return function () {
+        
+        for (let i = 0, iLen = items.length; i < iLen; i++) {
+
+            if (items[i] === item) {
+
+                items.splice(i, 1);
+                break;
+            }
+        }
+    };
+};
 
 const handler = function (e) {
 
@@ -30,11 +46,13 @@ const handler = function (e) {
             details,
             visibleHeight,
             index = items.length,
-            item;
+            item,
+            options;
 
         while (index--) {
 
             item = items[index];
+            options = item.options;
             clientRect = item.element.getBoundingClientRect();
             visibleHeight = clientRect.height;
 
@@ -57,12 +75,12 @@ const handler = function (e) {
 
                 details.availableWidth = details.availableRight - details.availableLeft;
                 details.availableHeight = details.availableBottom - details.availableTop;
-                details.areaAvailable = details.availableWidth * details.availableHeight;
+                details.availableArea = details.availableWidth * details.availableHeight;
 
-                item.callback(createEvent(item.element, e, details));
+                item.callback(createEvent(item.element, e, details, removeMethod(item)));
                 
                 // Remove the element from the list of items as the callback is already executed
-                if (item.once)
+                if (options.once)
                     items.splice(index, 1);
             }
 
