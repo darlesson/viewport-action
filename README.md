@@ -4,7 +4,7 @@ Provides a way with extra configuration options to execute a handler when a give
 
 Few things to know:
 
-* It checks when an element is on view as soon as it's added to `viewPortAction`.
+* It checks when an element is on view as soon as it's added to `viewportAction`.
 * It skips all elements that are not on view at the moment the event triggers the handler.
 This means it will not call the handlers for elements that where just scrolled over.
 
@@ -22,17 +22,21 @@ npm i viewport-action
 
 ## Usage
 
+```
+import viewportAction from 'viewport-action';
+```
+
 #### Bind a handler to an element
 
 You can add elements or selectors with the handlers. The `add` method waits for `whenDocumentReady`
 to execute a callback when the document is ready. Only one element can be bound per handler.
 
 ```javascript
-viewPortAction.add('#selector', function (e) { /* Code here */ });
+viewportAction.add('#selector', function (e) { /* Code here */ });
 
 // or
 
-viewPortAction.add(document.getElementById('selector'), function (e) { /* Code here */ });
+viewportAction.add(document.getElementById('selector'), function (e) { /* Code here */ });
 ```
 
 #### The event object
@@ -102,7 +106,7 @@ const options = {
     once: false
 };
 
-viewPortAction.add('#selector', function (e) { /* Code here */ }, options);
+viewportAction.add('#selector', function (e) { /* Code here */ }, options);
 ```
 
 #### Executing the handler once
@@ -114,7 +118,7 @@ var options = {
     once: true
 };
 
-viewPortAction.add('#selector', function (e) {
+viewportAction.add('#selector', function (e) {
     e.target.innerText = 'Element on viewport.';
 }, options);
 ```
@@ -124,7 +128,7 @@ viewPortAction.add('#selector', function (e) {
 You can allow the handler to be executed until a condition is met and only then unbind it.
 
 ```javascript
-viewPortAction.add('#selector', function (e) {
+viewportAction.add('#selector', function (e) {
 
     // Load an image inside the element when the area visible is bigger
     // than 1000 pixels.

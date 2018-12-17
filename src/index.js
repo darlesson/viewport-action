@@ -89,14 +89,14 @@ const handler = function (e) {
         // Unbind the events if there nothing to watch for
         if (!items.length) {
             
-            window.removeEventListener("resize", handler, false);
-            window.removeEventListener("scroll", handler, false);
+            window.removeEventListener('resize', handler, false);
+            window.removeEventListener('scroll', handler, false);
         }
 
     }, 500);
 }
 
-const viewPortAction = {
+const viewportAction = {
 
     /**
      * Add elements to be checked when available on the viewport. Also add
@@ -120,7 +120,7 @@ const viewPortAction = {
      */
     add: function (element, callback, options) {
 
-        viewPortAction.whenDocumentReady(function (defaultView, e) {
+        viewportAction.whenDocumentReady(function (defaultView, e) {
 
             // Resolve selectors if element is a string
             element = typeof element === 'string' ? defaultView.document.querySelector(element) : element;
@@ -137,8 +137,8 @@ const viewPortAction = {
             // Only bind the DOM events when there is something to check
             if (!items.length) {
 
-                defaultView.addEventListener("resize", handler, false);
-                defaultView.addEventListener("scroll", handler, false);
+                defaultView.addEventListener('resize', handler, false);
+                defaultView.addEventListener('scroll', handler, false);
             }
             
             items.push({
@@ -178,4 +178,4 @@ const viewPortAction = {
     }
 };
 
-export default viewPortAction;
+export default viewportAction;

@@ -1,4 +1,4 @@
-import { default as viewPortAction } from '../../src/index';
+import { default as viewportAction } from '../../src/index';
 
 /**
  * Shows the dimensions found on screen. The intention is to demonstrate
@@ -82,19 +82,19 @@ let showByHorizontalPixels = (e) => {
 }
 
 // Using selectors
-viewPortAction.add('#item-1', showByArea);
-viewPortAction.add('#item-2', showByArea);
-viewPortAction.add('#item-3', showByArea);
-viewPortAction.add('#item-4', showByVerticalPixels);
+viewportAction.add('#item-1', showByArea);
+viewportAction.add('#item-2', showByArea);
+viewportAction.add('#item-3', showByArea);
+viewportAction.add('#item-4', showByVerticalPixels);
 
 // Using elements
-viewPortAction.add(document.getElementById('item-5'), showByVerticalPixels, {
+viewportAction.add(document.getElementById('item-5'), showByVerticalPixels, {
     once: true
 });
 
-viewPortAction.add(document.getElementById('item-6'), showByVerticalPixels);
-viewPortAction.add(document.getElementById('item-7'), showByHorizontalPixels);
-viewPortAction.add(document.getElementById('item-8'), showByHorizontalPixels);
+viewportAction.add(document.getElementById('item-6'), showByVerticalPixels);
+viewportAction.add(document.getElementById('item-7'), showByHorizontalPixels);
+viewportAction.add(document.getElementById('item-8'), showByHorizontalPixels);
 
 // Element is not found
-viewPortAction.add(document.getElementById('item-to-fail'));
+viewportAction.add(document.getElementById('item-to-fail'));

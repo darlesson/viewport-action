@@ -14,7 +14,7 @@ module.exports = {
     },
 
     entry: {
-        viewPortAction: "./src/index.js",
+        viewportAction: "./src/index.js",
         examples: './examples/scripts/examples.js'
     },
 

@@ -4,7 +4,7 @@
     "license": "MIT",
     "version": "0.1.1",
     "description": "Provides a way with extra configuration options to execute a handler when a given element is on view.",
-    "main": "dist/index.js",
+    "main": "src/index.js",
     "scripts": {
         "prepare": "webpack",
         "start:dev": "webpack-dev-server"
