@@ -12,6 +12,10 @@ This means it will not call the handlers for elements that where just scrolled o
 
 ### Using NPM
 
+```shell
+npm i viewport-action
+```
+
 ### Using CDN
 
 ### Download files
