@@ -1,42 +1,50 @@
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require("path");
+const path = require('path');
+const plugins = [new CleanWebpackPlugin(['dist'])];
 
-module.exports = {
-    mode: "development",
+module.exports = (env, argv) => {
 
-    devtool: "source-map",
+    const isDev = argv.mode === 'development';
 
-    devServer: {
-        //contentBase: path.join(__dirname, 'dist'),
-        // index: './examples/index.html',
-        compress: true,
-        port: 9000
-    },
+    if (isDev) {
 
-    entry: {
-        viewportAction: "./src/index.js",
-        examples: './examples/scripts/examples.js'
-    },
+        plugins.push(new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: './examples/index.html'
+        }));
+    }
 
-    externals: /(xlsx|pdfmake|canvg)$/,
+    return {
+        mode: argv.mode,
 
-    output: {
-        path: path.join(__dirname, "dist"),
-        filename: "[name].js",
-        chunkFilename: "[name].js"
-    },
+        devtool: 'source-map',
 
-    module: {
-        rules: [{
-            test: /.js$/,
-            enforce: "pre",
-            use: ["source-map-loader"],
-            exclude: /(pdfmake)$/
-        }]
-    },
+        devServer: {
+            // contentBase: path.join(__dirname, 'dist'),
+            // index: './examples/index.html',
+            compress: true,
+            port: 9000
+        },
 
-    plugins: [new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: './examples/index.html'
-    })]
-};
+        entry: {
+            viewportAction: './src/index.js',
+            examples: './examples/scripts/examples.js'
+        },
+
+        output: {
+            path: path.join(__dirname, 'dist'),
+            filename: isDev ? '[name].js' : '[name].min.js'
+        },
+
+        module: {
+            rules: [{
+                test: /.js$/,
+                enforce: 'pre',
+                use: ['source-map-loader']
+            }]
+        },
+
+        plugins: plugins
+    };
+}
