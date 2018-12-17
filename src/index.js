@@ -7,7 +7,7 @@ const defaultOptions = {
     once: false
 };
 
-const items = [];
+const items = new Set();
 
 const createEvent = (element, e, details, removeHandler) => {
 
@@ -22,14 +22,8 @@ const removeMethod = function (item) {
 
     return function () {
         
-        for (let i = 0, iLen = items.length; i < iLen; i++) {
-
-            if (items[i] === item) {
-
-                items.splice(i, 1);
-                break;
-            }
-        }
+        if (items.has(item))
+            items.delete(item);
     };
 };
 
@@ -45,13 +39,11 @@ const handler = function (e) {
             clientRect,
             details,
             visibleHeight,
-            index = items.length,
             item,
             options;
 
-        while (index--) {
+        for (item of items) {
 
-            item = items[index];
             options = item.options;
             clientRect = item.element.getBoundingClientRect();
             visibleHeight = clientRect.height;
@@ -81,13 +73,13 @@ const handler = function (e) {
                 
                 // Remove the element from the list of items as the callback is already executed
                 if (options.once)
-                    items.splice(index, 1);
+                    items.delete(item);
             }
 
         }
 
         // Unbind the events if there nothing to watch for
-        if (!items.length) {
+        if (!items.size) {
             
             window.removeEventListener('resize', handler, false);
             window.removeEventListener('scroll', handler, false);
@@ -135,13 +127,13 @@ const viewportAction = {
             } : defaultOptions;
 
             // Only bind the DOM events when there is something to check
-            if (!items.length) {
+            if (!items.size) {
 
                 defaultView.addEventListener('resize', handler, false);
                 defaultView.addEventListener('scroll', handler, false);
             }
             
-            items.push({
+            items.add({
                 element: element,
                 callback: callback,
                 options: options
