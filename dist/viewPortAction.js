@@ -95,26 +95,41 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _viewPortEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./viewPortEvent */ "./src/viewPortEvent.js");
+/* harmony import */ var _viewportEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./viewportEvent */ "./src/viewportEvent.js");
 
 
 let timeout = 0;
 
 const defaultOptions = {
     wait: 100,
-    skipWhenNotInView: true,
-    once: true
+    once: false
 };
 
 const items = [];
 
-const createEvent = (element, e, details) => {
+const createEvent = (element, e, details, removeHandler) => {
 
-    return new _viewPortEvent__WEBPACK_IMPORTED_MODULE_0__["default"](e, {
+    return new _viewportEvent__WEBPACK_IMPORTED_MODULE_0__["default"](e, {
         target: element,
-        detail: details
+        detail: details,
+        removeHandler: removeHandler
     });
 }
+
+const removeMethod = function (item) {
+
+    return function () {
+        
+        for (let i = 0, iLen = items.length; i < iLen; i++) {
+
+            if (items[i] === item) {
+
+                items.splice(i, 1);
+                break;
+            }
+        }
+    };
+};
 
 const handler = function (e) {
 
@@ -129,11 +144,13 @@ const handler = function (e) {
             details,
             visibleHeight,
             index = items.length,
-            item;
+            item,
+            options;
 
         while (index--) {
 
             item = items[index];
+            options = item.options;
             clientRect = item.element.getBoundingClientRect();
             visibleHeight = clientRect.height;
 
@@ -156,13 +173,13 @@ const handler = function (e) {
 
                 details.availableWidth = details.availableRight - details.availableLeft;
                 details.availableHeight = details.availableBottom - details.availableTop;
-                details.areaAvailable = details.availableWidth * details.availableHeight;
+                details.availableArea = details.availableWidth * details.availableHeight;
 
-                item.callback(createEvent(item.element, e, details));
+                item.callback(createEvent(item.element, e, details, removeMethod(item)));
                 
-                // Remove the element from the list of items as the callback is already
-                // executed
-                items.splice(index, 1);
+                // Remove the element from the list of items as the callback is already executed
+                if (options.once)
+                    items.splice(index, 1);
             }
 
         }
@@ -187,10 +204,8 @@ const viewPortAction = {
      * let options = {
      *     // How long it should wait to call the callback. Defaults to 0.
      *     wait: 100,
-     *     // Skip calling the callback if the element moves out of the viewport when the wait is over. Defaults to true.
-     *     skipWhenNotInView: true,
-     *     // Whether to trigger the callback just once. Defaults to true.
-     *     once: true,
+     *     // Whether to trigger the callback just once. Defaults to false.
+     *     once: false,
      *     // The document the element will be checked against. Defaults to window.document.
      *     document: window.document
      * };
@@ -214,7 +229,6 @@ const viewPortAction = {
 
             options = typeof options === 'object' && !Array.isArray(options) ? {
                 wait: typeof options.wait === 'number' ? options.wait : defaultOptions.wait,
-                skipWhenNotInView: typeof options.skipWhenNotInView ? options.skipWhenNotInView : defaultOptions.skipWhenNotInView,
                 once: typeof options.once === 'boolean' ? options.once : defaultOptions.once
             } : defaultOptions;
 
@@ -238,6 +252,13 @@ const viewPortAction = {
         }, options ? options.document : null);
     },
 
+    /**
+     * Execute a callback function when a given document is ready.
+     * 
+     * @method whenDocumentReady
+     * @param {Function} callback 
+     * @param {Document} doc The optional document. It defaults to `window.document`.
+     */
     whenDocumentReady: function (callback, doc) {
 
         // Fallback to the current document
@@ -259,22 +280,23 @@ const viewPortAction = {
 
 /***/ }),
 
-/***/ "./src/viewPortEvent.js":
+/***/ "./src/viewportEvent.js":
 /*!******************************!*\
-  !*** ./src/viewPortEvent.js ***!
+  !*** ./src/viewportEvent.js ***!
   \******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-class ViewPortEvent {
+class ViewportEvent {
 
     constructor (e, options) {
 
         this._originalEvent = e;
         this._detail = options.detail;
         this._target = options.target;
+        this._removeHandler = options.removeHandler;
     }
 
     get type () {
@@ -304,9 +326,13 @@ class ViewPortEvent {
     get timeStamp () {
         return this.originalEvent.timeStamp;
     }
+
+    removeHandler () {
+        this._removeHandler();
+    }
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (ViewPortEvent);
+/* harmony default export */ __webpack_exports__["default"] = (ViewportEvent);
 
 /***/ })
 

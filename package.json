@@ -1,6 +1,10 @@
 {
     "name": "viewport-action",
-    "version": "0.1.0-alpha.0",
+    "author": "Darlesson Oliveira",
+    "license": "MIT",
+    "version": "0.1.0",
+    "description": "Provides a way with extra configuration options to execute a handler when a given element is on view.",
+    "main": "dist/index.js",
     "scripts": {
         "prepare": "webpack",
         "start:dev": "webpack-dev-server"
@@ -14,5 +18,25 @@
         "webpack-dev-server": "3.1.10",
         "html-webpack-plugin": "3.2.0",
         "source-map-loader": "0.2.4"
-    }
+    },
+    "directories": {
+        "example": "examples"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/darlesson/viewport-action.git"
+    },
+    "keywords": [
+        "viewport",
+        "event",
+        "load",
+        "mobile",
+        "cordova",
+        "document",
+        "performance"
+    ],
+    "bugs": {
+        "url": "https://github.com/darlesson/viewport-action/issues"
+    },
+    "homepage": "https://github.com/darlesson/viewport-action#readme"
 }
