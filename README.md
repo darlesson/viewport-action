@@ -146,4 +146,4 @@ Open http://localhost:9000/ on your browser.
 
 ## License
 
-MIT License.
+[MIT License](https://github.com/darlesson/viewport-action/blob/master/LICENSE)
