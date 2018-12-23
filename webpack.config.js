@@ -36,6 +36,7 @@ module.exports = (env, argv) => {
             path: path.join(__dirname, 'dist'),
             filename: isDev ? '[name].js' : '[name].min.js',
             library: 'viewportAction',
+            libraryExport: 'default',
             libraryTarget: 'umd'
         },
 
