@@ -1,4 +1,4 @@
-import { default as viewportAction } from '../../src/index';
+import viewportAction from '../../src/index';
 
 /**
  * Shows the dimensions found on screen. The intention is to demonstrate

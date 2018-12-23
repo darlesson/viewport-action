@@ -34,11 +34,27 @@ module.exports = (env, argv) => {
 
         output: {
             path: path.join(__dirname, 'dist'),
-            filename: isDev ? '[name].js' : '[name].min.js'
+            filename: isDev ? '[name].js' : '[name].min.js',
+            library: 'viewportAction',
+            libraryTarget: 'umd'
         },
 
         module: {
             rules: [{
+                test: /\.m?js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: [
+                            '@babel/plugin-proposal-object-rest-spread',
+                            '@babel/plugin-transform-runtime',
+                            '@babel/plugin-transform-modules-umd'
+                        ]
+                    }
+                }
+            }, {
                 test: /.js$/,
                 enforce: 'pre',
                 use: ['source-map-loader']

@@ -19,15 +19,30 @@ npm i viewport-action
 ### Using CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.1.3/dist/viewportAction.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.1.4/dist/viewportAction.min.js"></script>
 ```
 
 ### Download files
 
+You can download the distribution files from https://github.com/darlesson/viewport-action/tree/master/dist
+
 ## Usage
 
-```
+```javascript
+// Importing with ES6
 import viewportAction from 'viewport-action';
+```
+
+```javascript
+// Using RequireJS
+require(['./src/viewportAction.min'], function (viewportAction) {
+
+});
+```
+
+```javascript
+// Global reference when not using Require JS
+window.viewportAction;
 ```
 
 #### Bind a handler to an element
