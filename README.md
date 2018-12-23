@@ -8,6 +8,10 @@ Few things to know:
 * It skips all elements that are not on view at the moment the event triggers the handler.
 This means it will not call the handlers for elements that where just scrolled over.
 
+## Example
+
+https://codepen.io/rooyva/pen/aPWNXQ
+
 ## Installation
 
 ### Using NPM
