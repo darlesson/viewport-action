@@ -37,11 +37,28 @@
 <body>
     <div class="ui container">
 
-        <h1 class="ui header">Load on Viewport Examples</h1>
+        <h1 class="ui header">Modifying element when on Viewport Examples</h1>
 
-        <h3 class="ui header">Load on DOM Load</h3>
+        <h3 class="ui header">Modifying element on DOM Load</h3>
 
         <div id="item-1" class="ui segment">
+            <div class="ui active loader"></div>
+        </div>
+
+        <h3 class="ui header">Modifying element when visible</h3>
+
+        <div class="ui top attached tabular menu">
+            <a class="item" data-tab="first">First</a>
+            <a class="item active" data-tab="second">Second</a>
+            <a class="item" data-tab="third">Third</a>
+        </div>
+        <div id="item-tab-1" class="ui bottom attached tab segment" data-tab="first">
+            <div class="ui active loader"></div>
+        </div>
+        <div id="item-tab-2" class="ui bottom attached tab segment active" data-tab="second">
+            <div class="ui active loader"></div>
+        </div>
+        <div id="item-tab-3" class="ui bottom attached tab segment" data-tab="third">
             <div class="ui active loader"></div>
         </div>
 
@@ -90,7 +107,7 @@
             pretium leo eu condimentum. In suscipit pulvinar magna non imperdiet.
         </p>
 
-        <h3 class="ui header">Multiple Items</h3>
+        <h3 class="ui header">Multiple Elements</h3>
 
         <div id="six-items-section" class="ui three column doubling stackable grid container">
             <div class="column">
@@ -185,7 +202,7 @@
             faucibus sagittis.
         </p>
 
-        <h3 class="ui header">Single Item</h3>
+        <h3 class="ui header">Single Element</h3>
 
         <div id="item-8" class="ui segment">
             <div class="ui active loader"></div>

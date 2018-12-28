@@ -23,7 +23,7 @@ npm i viewport-action
 ### Using CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.1.4/dist/viewportAction.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.2.0/dist/viewportAction.min.js"></script>
 ```
 
 ### Download files
@@ -162,6 +162,20 @@ viewportAction.add('#selector', function (e) {
         // Remove handler
         e.removeHandler();
     }
+});
+```
+
+#### Check whether an element is on the viewport
+
+You can check whether an element is on the viewport on demand without waiting for document changes.
+
+```javascript
+// You can use a selector or the element itself
+viewportAction.check('#selector', function (e) {
+    // Code here
+}, function () {
+    // Optional callback handler if the element is not on the document. Just one of the
+    // 2 callbacks is called.
 });
 ```
 

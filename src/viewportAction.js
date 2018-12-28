@@ -25,7 +25,54 @@ const removeMethod = function (item) {
         if (items.has(item))
             items.delete(item);
     };
-};
+}
+
+/**
+ * Resolve selectors if element is a string.
+ * 
+ * @method getElement
+ * @param {Element|String} element The element or selector.
+ * @param {Window} defaultView The window where the element is from.
+ * @return {Element}
+ */
+const getElement = function (element, defaultView) {
+    return typeof element === 'string' ? defaultView.document.querySelector(element) : element;
+}
+
+const check = function (item, items, clientWidth, clientHeight, e) {
+
+    let options = item.options,
+        clientRect = item.element.getBoundingClientRect(),
+        visibleHeight = clientRect.height;
+
+    if (clientRect.top >= visibleHeight * -1 && clientRect.bottom <= clientHeight + visibleHeight) {
+
+        let details = {
+            // Available values
+            availableTop: clientRect.top < 0 ? 0 : clientRect.top,
+            availableBottom: clientRect.bottom > clientHeight ? clientHeight : clientRect.bottom,
+            availableLeft: clientRect.left < 0 ? 0 : clientRect.left,
+            availableRight: clientRect.right > clientWidth ? clientWidth : clientRect.right,
+            // Client rect values
+            top: clientRect.top,
+            bottom: clientRect.bottom,
+            left: clientRect.left,
+            right: clientRect.right,
+            height: clientRect.height,
+            width: clientRect.width
+        };
+
+        details.availableWidth = details.availableRight - details.availableLeft;
+        details.availableHeight = details.availableBottom - details.availableTop;
+        details.availableArea = details.availableWidth * details.availableHeight;
+
+        item.callback(createEvent(item.element, e, details, removeMethod(item)));
+        
+        // Remove the element from the list of items as the callback is already executed
+        if (options.once)
+            items.delete(item);
+    }
+}
 
 const handler = function (e) {
 
@@ -35,47 +82,12 @@ const handler = function (e) {
     timeout = setTimeout(function () {
 
         let html = document.documentElement,
+            clientWidth = html.clientWidth,
             clientHeight = html.clientHeight,
-            clientRect,
-            details,
-            visibleHeight,
-            item,
-            options;
+            item;
 
         for (item of items) {
-
-            options = item.options;
-            clientRect = item.element.getBoundingClientRect();
-            visibleHeight = clientRect.height;
-
-            if (clientRect.top >= visibleHeight * -1 && clientRect.bottom <= clientHeight + visibleHeight) {
-
-                details = {
-                    // Available values
-                    availableTop: clientRect.top < 0 ? 0 : clientRect.top,
-                    availableBottom: clientRect.bottom > html.clientHeight ? html.clientHeight : clientRect.bottom,
-                    availableLeft: clientRect.left < 0 ? 0 : clientRect.left,
-                    availableRight: clientRect.right > html.clientWidth ? html.clientWidth : clientRect.right,
-                    // Client rect values
-                    top: clientRect.top,
-                    bottom: clientRect.bottom,
-                    left: clientRect.left,
-                    right: clientRect.right,
-                    height: clientRect.height,
-                    width: clientRect.width
-                };
-
-                details.availableWidth = details.availableRight - details.availableLeft;
-                details.availableHeight = details.availableBottom - details.availableTop;
-                details.availableArea = details.availableWidth * details.availableHeight;
-
-                item.callback(createEvent(item.element, e, details, removeMethod(item)));
-                
-                // Remove the element from the list of items as the callback is already executed
-                if (options.once)
-                    items.delete(item);
-            }
-
+            check(item, items, clientWidth, clientHeight, e);
         }
 
         // Unbind the events if there nothing to watch for
@@ -137,8 +149,7 @@ const viewportAction = Object.create({
 
         this.whenDocumentReady(function (defaultView, e) {
 
-            // Resolve selectors if element is a string
-            element = typeof element === 'string' ? defaultView.document.querySelector(element) : element;
+            element = getElement(element, defaultView);
 
             // Only bind the events if the node is an instance of Element and attached to a document
             if (!(element instanceof Element) || element.ownerDocument !== defaultView.document)
@@ -167,6 +178,37 @@ const viewportAction = Object.create({
             handler(e);
 
         }, options ? options.document : null);
+    },
+
+    /**
+     * Check when an element is on the viewport.
+     * 
+     * @method check
+     * @param {Element|String} element The element or selector.
+     * @param {Function} callback The function to be executed when on viewport.
+     * @param {Function} failedCallback The function to be executed when the element is not found in the document. 
+     */
+    check: function (element, callback, failedCallback) {
+
+        element = getElement(element, window);
+
+        // Only bind the events if the node is an instance of Element and attached to a document
+        if (!(element instanceof Element) || element.ownerDocument !== window.document) {
+            failedCallback();
+            return;
+        }
+
+        let html = document.documentElement,
+            item = {
+                element: element,
+                callback: callback,
+                options: {
+                    wait: 0,
+                    once: false
+                }
+            };
+
+        check(item, [], html.clientWidth, html.clientHeight);
     }
 });
 

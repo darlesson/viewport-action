@@ -98,3 +98,15 @@ viewportAction.add(document.getElementById('item-8'), showByHorizontalPixels);
 
 // Element is not found
 viewportAction.add(document.getElementById('item-to-fail'));
+
+// Tabs (only the visible one should be visible in the viewport)
+viewportAction.add('#item-tab-1', showByArea);
+viewportAction.add('#item-tab-2', showByArea);
+viewportAction.add('#item-tab-3', showByArea);
+
+// Enable tabs
+$('.menu .item').tab({
+    onVisible: function () {
+        viewportAction.check(this, showByArea);
+    }
+});
