@@ -2,7 +2,7 @@
     "name": "viewport-action",
     "author": "Darlesson Oliveira",
     "license": "MIT",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "Provides a way with extra configuration options to execute a handler when a given element is on view.",
     "main": "dist/viewportAction.min.js",
     "module": "src/index.js",
@@ -34,20 +34,28 @@
     },
     "keywords": [
         "viewport",
-        "event",
+        "events",
         "lazy",
         "load",
         "mobile",
         "cordova",
         "phonegap",
+        "window",
         "document",
-        "performance"
+        "performance",
+        "resize",
+        "scroll",
+        "responsive",
+        "state",
+        "dimensions",
+        "intersection",
+        "observer",
+        "visible",
+        "devices",
+        "size"
     ],
     "bugs": {
         "url": "https://github.com/darlesson/viewport-action/issues"
     },
-    "homepage": "https://github.com/darlesson/viewport-action#readme",
-    "dependencies": {
-        "npm": "^6.5.0"
-    }
+    "homepage": "https://github.com/darlesson/viewport-action#readme"
 }

@@ -23,7 +23,7 @@ npm i viewport-action
 ### Using CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.2.0/dist/viewportAction.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.2.2/dist/viewportAction.min.js"></script>
 ```
 
 ### Download files
