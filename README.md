@@ -184,7 +184,7 @@ viewportAction.check('#selector', function (e) {
 You can run the command below to build the application and run a server to test and deveop.
 
 ```
-npm run start:dev
+npm start
 ```
 
 Open http://localhost:9000/ on your browser.
