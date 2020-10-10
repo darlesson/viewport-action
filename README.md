@@ -23,7 +23,7 @@ npm i viewport-action
 ### Using CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/viewport-action@0.2.2/dist/viewportAction.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/viewport-action@1.0.0/dist/viewportAction.min.js"></script>
 ```
 
 ### Download files
@@ -137,7 +137,7 @@ viewportAction.add('#selector', function (e) { /* Code here */ }, options);
 You can have the handler unbinding on the first time the element is on the viewport.
 
 ```javascript
-var options = {
+const options = {
     once: true
 };
 
