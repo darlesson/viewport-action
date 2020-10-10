@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "declaration": true,
+        "declarationDir": "typings",
+        "target": "es2019",
+        "outDir": "./es/",
+        "esModuleInterop": true,
+        "types" : ["node"]
+    }
+}

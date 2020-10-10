@@ -1,15 +1,31 @@
+import { Detail } from './EventOptions';
 import ViewportEvent from './viewportEvent';
 
-let timeout = 0;
+let timeout: any;
 
-const defaultOptions = {
+export interface Item {
+    element: HTMLElement;
+    callback: Callback;
+    options: Options;
+}
+
+export interface Options {
+    readonly wait?: number;
+    readonly once?: boolean;
+    readonly document?: Document;
+}
+
+export type Callback = (e?: ViewportEvent) => void;
+
+const items = new Set<Item>();
+
+const defaultAddOptions = {
     wait: 100,
-    once: false
-};
+    once: false,
+    document: window.document
+}
 
-const items = new Set();
-
-const createEvent = (element, e, details, removeHandler) => {
+const createEvent = (element: HTMLElement, e: Event, details: Detail, removeHandler: () => void) => {
 
     return new ViewportEvent(e, {
         target: element,
@@ -18,7 +34,7 @@ const createEvent = (element, e, details, removeHandler) => {
     });
 }
 
-const removeMethod = function (item) {
+const removeMethod = function (item: Item) {
 
     return function () {
         
@@ -31,15 +47,14 @@ const removeMethod = function (item) {
  * Resolve selectors if element is a string.
  * 
  * @method getElement
- * @param {Element|String} element The element or selector.
- * @param {Window} defaultView The window where the element is from.
- * @return {Element}
+ * @param element The element or selector.
+ * @param defaultView The window where the element is from.
  */
-const getElement = function (element, defaultView) {
-    return typeof element === 'string' ? defaultView.document.querySelector(element) : element;
+const getElement = function (element: HTMLElement | String, defaultView: Window) {
+    return (typeof element === 'string' ? defaultView.document.querySelector(element) : element) as HTMLElement;
 }
 
-const check = function (item, items, clientWidth, clientHeight, e) {
+const check = function (item: Item, items: Set<Item>, clientWidth: number, clientHeight: number, e?: Event) {
 
     let options = item.options,
         clientRect = item.element.getBoundingClientRect(),
@@ -47,12 +62,22 @@ const check = function (item, items, clientWidth, clientHeight, e) {
 
     if (clientRect.top >= visibleHeight * -1 && clientRect.bottom <= clientHeight + visibleHeight) {
 
-        let details = {
+        const availableTop = clientRect.top < 0 ? 0 : clientRect.top;
+        const availableBottom = clientRect.bottom > clientHeight ? clientHeight : clientRect.bottom;
+        const availableLeft = clientRect.left < 0 ? 0 : clientRect.left;
+        const availableRight = clientRect.right > clientWidth ? clientWidth : clientRect.right;
+        const availableWidth = availableRight - availableLeft;
+        const availableHeight = availableBottom - availableTop;
+
+        const details: Detail = Object.freeze({
             // Available values
-            availableTop: clientRect.top < 0 ? 0 : clientRect.top,
-            availableBottom: clientRect.bottom > clientHeight ? clientHeight : clientRect.bottom,
-            availableLeft: clientRect.left < 0 ? 0 : clientRect.left,
-            availableRight: clientRect.right > clientWidth ? clientWidth : clientRect.right,
+            availableTop: availableTop,
+            availableBottom: availableBottom,
+            availableLeft: availableLeft,
+            availableRight: availableRight,
+            availableWidth: availableRight - availableLeft,
+            availableHeight: availableBottom - availableTop,
+            availableArea: availableWidth * availableHeight,
             // Client rect values
             top: clientRect.top,
             bottom: clientRect.bottom,
@@ -60,11 +85,7 @@ const check = function (item, items, clientWidth, clientHeight, e) {
             right: clientRect.right,
             height: clientRect.height,
             width: clientRect.width
-        };
-
-        details.availableWidth = details.availableRight - details.availableLeft;
-        details.availableHeight = details.availableBottom - details.availableTop;
-        details.availableArea = details.availableWidth * details.availableHeight;
+        });
 
         item.callback(createEvent(item.element, e, details, removeMethod(item)));
         
@@ -74,7 +95,7 @@ const check = function (item, items, clientWidth, clientHeight, e) {
     }
 }
 
-const handler = function (e) {
+const handler = function (e: Event) {
 
     clearTimeout(timeout);
 
@@ -105,11 +126,13 @@ const viewportAction = Object.create({
     /**
      * Execute a callback function when a given document is ready.
      * 
-     * @method whenDocumentReady
-     * @param {Function} callback 
-     * @param {Document} doc The optional document. It defaults to `window.document`.
+     * NOTE: this method is used internally by the other methods and it's
+     * exposed for convenience in case you would like to used it.
+     * 
+     * @param callback 
+     * @param doc The optional document. It defaults to `window.document`.
      */
-    whenDocumentReady: function (callback, doc) {
+    whenDocumentReady: function (callback: (defaultView?: Window, e?: Event) => void, doc: Document) {
 
         // Fallback to the current document
         doc = doc && doc.nodeType === 9 ? doc : window.document;
@@ -119,7 +142,7 @@ const viewportAction = Object.create({
         } else {
 
             // Support Cordova or document ready events
-            doc.addEventListener(window.cordova ? 'deviceready' : 'DOMContentLoaded', (e) => {
+            doc.addEventListener((window as any).cordova ? 'deviceready' : 'DOMContentLoaded', (e: Event) => {
                 callback(doc.defaultView, e);
             }, false);
         }
@@ -127,10 +150,10 @@ const viewportAction = Object.create({
 
     /**
      * Add elements to be checked when available on the viewport. Also add
-     * callback to be executed when the element is on teh viewport.
+     * callback to be executed when the element is on the viewport.
      * 
      * ```javascript
-     * let options = {
+     * const options = {
      *     // How long it should wait to call the callback. Defaults to 0.
      *     wait: 100,
      *     // Whether to trigger the callback just once. Defaults to false.
@@ -138,27 +161,25 @@ const viewportAction = Object.create({
      *     // The document the element will be checked against. Defaults to window.document.
      *     document: window.document
      * };
+     * 
+     * viewportAction.add('#my-selector-or-element', (e) => { ... }, options);
      * ```
      * 
-     * @method add
-     * @param {Element|String} element The HTML element or the selector.
-     * @param {Function} callback The function to be executed when on viewport.
-     * @param {Object} options Some optional parameters
+     * @param element The HTML element or the selector.
+     * @param callback The function to be executed when on viewport.
+     * @param options Some optional parameters
      */
-    add: function (element, callback, options) {
+    add: function (element: HTMLElement | String, callback: Callback, options: Options = {}) {
 
-        this.whenDocumentReady(function (defaultView, e) {
+        const mergedOptions = {...options, ...defaultAddOptions};
+
+        this.whenDocumentReady((defaultView: Window, e: Event) => {
 
             element = getElement(element, defaultView);
 
             // Only bind the events if the node is an instance of Element and attached to a document
             if (!(element instanceof Element) || element.ownerDocument !== defaultView.document)
                 return;
-
-            options = typeof options === 'object' && !Array.isArray(options) ? {
-                wait: typeof options.wait === 'number' ? options.wait : defaultOptions.wait,
-                once: typeof options.once === 'boolean' ? options.once : defaultOptions.once
-            } : defaultOptions;
 
             // Only bind the DOM events when there is something to check
             if (!items.size) {
@@ -170,25 +191,24 @@ const viewportAction = Object.create({
             items.add({
                 element: element,
                 callback: callback,
-                options: options
+                options: mergedOptions
             });
 
             // Call the handler right away to check it the element is already in the
             // viewport
             handler(e);
 
-        }, options ? options.document : null);
+        }, mergedOptions ? mergedOptions.document : null);
     },
 
     /**
      * Check when an element is on the viewport.
      * 
-     * @method check
-     * @param {Element|String} element The element or selector.
-     * @param {Function} callback The function to be executed when on viewport.
-     * @param {Function} failedCallback The function to be executed when the element is not found in the document. 
+     * @param element The element or selector.
+     * @param callback The function to be executed when on viewport.
+     * @param failedCallback The function to be executed when the element is not found in the document. 
      */
-    check: function (element, callback, failedCallback) {
+    check: function (element: HTMLElement | String, callback: Callback, failedCallback: Function) {
 
         element = getElement(element, window);
 
@@ -198,17 +218,17 @@ const viewportAction = Object.create({
             return;
         }
 
-        let html = document.documentElement,
-            item = {
-                element: element,
-                callback: callback,
-                options: {
-                    wait: 0,
-                    once: false
-                }
-            };
+        const html = document.documentElement;
+        const item = {
+            element: element,
+            callback: callback,
+            options: {
+                wait: 0,
+                once: false
+            }
+        };
 
-        check(item, [], html.clientWidth, html.clientHeight);
+        check(item, new Set(), html.clientWidth, html.clientHeight);
     }
 });
 

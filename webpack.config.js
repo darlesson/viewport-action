@@ -1,11 +1,17 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const plugins = [new CleanWebpackPlugin(['dist'])];
 
 module.exports = (env, argv) => {
 
     const isDev = argv.mode === 'development';
+    const libraryName = 'viewportAction';
+
+    const plugins = [new CleanWebpackPlugin()];
+
+    const entry = {
+        viewportAction: './src/index.ts'
+    };
 
     if (isDev) {
 
@@ -13,6 +19,8 @@ module.exports = (env, argv) => {
             filename: 'index.html',
             template: './examples/index.html'
         }));
+
+        entry.examples = './examples/scripts/examples.js';
     }
 
     return {
@@ -21,45 +29,38 @@ module.exports = (env, argv) => {
         devtool: 'source-map',
 
         devServer: {
-            // contentBase: path.join(__dirname, 'dist'),
-            // index: './examples/index.html',
+            contentBase: path.join(__dirname, 'examples'),
+            index: './examples/index.html',
             compress: true,
             port: 9000
         },
 
-        entry: {
-            viewportAction: './src/index.js',
-            examples: './examples/scripts/examples.js'
-        },
+        entry: entry,
 
         output: {
             path: path.join(__dirname, 'dist'),
             filename: isDev ? '[name].js' : '[name].min.js',
-            library: 'viewportAction',
+            library: libraryName,
             libraryExport: 'default',
-            libraryTarget: 'umd'
+            libraryTarget: 'umd',
+            jsonpFunction: `${libraryName}_webpackJsonp`
         },
 
         module: {
             rules: [{
-                test: /\.m?js$/,
+                test: /\.ts(x?)$/,
                 exclude: /(node_modules)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env'],
-                        plugins: [
-                            '@babel/plugin-proposal-object-rest-spread',
-                            '@babel/plugin-transform-runtime',
-                            '@babel/plugin-transform-modules-umd'
-                        ]
-                    }
-                }
+                include: path.resolve(__dirname, 'src'),
+                loader: 'ts-loader'
             }, {
                 test: /.js$/,
                 enforce: 'pre',
                 use: ['source-map-loader']
             }]
+        },
+
+        resolve: {
+            extensions: ['.ts', '.js']
         },
 
         plugins: plugins
