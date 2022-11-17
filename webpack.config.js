@@ -31,8 +31,9 @@ module.exports = (env, argv) => {
         devtool: 'source-map',
 
         devServer: {
-            contentBase: path.join(__dirname, 'examples'),
-            index: './examples/index.html',
+            static: {
+                directory: path.join(__dirname, 'examples')
+            },
             compress: true,
             port: 9000
         },
