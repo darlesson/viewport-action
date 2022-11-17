@@ -9,6 +9,6 @@ export interface Options {
     readonly once?: boolean;
     readonly document?: Document;
 }
-export declare type Callback = (e?: ViewportEvent) => void;
+export type Callback = (e?: ViewportEvent) => void;
 declare const viewportAction: any;
 export default viewportAction;

@@ -1,13 +1,15 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const path = require('node:path');
 
 module.exports = (env, argv) => {
 
-    const isDev = argv.mode === 'development';
+    const mode = argv.mode === 'development' ? argv.mode : 'production'
+    const isDev = mode === 'development';
     const libraryName = 'viewportAction';
 
-    const plugins = [new CleanWebpackPlugin()];
+    // const plugins = [new CleanWebpackPlugin()];
+    const plugins = [];
 
     const entry = {
         viewportAction: './src/index.ts'
@@ -24,7 +26,7 @@ module.exports = (env, argv) => {
     }
 
     return {
-        mode: argv.mode,
+        mode: mode,
 
         devtool: 'source-map',
 
@@ -43,7 +45,7 @@ module.exports = (env, argv) => {
             library: libraryName,
             libraryExport: 'default',
             libraryTarget: 'umd',
-            jsonpFunction: `${libraryName}_webpackJsonp`
+            chunkLoadingGlobal: `${libraryName}_webpackChunkwebpack`
         },
 
         module: {
@@ -63,6 +65,6 @@ module.exports = (env, argv) => {
             extensions: ['.ts', '.js']
         },
 
-        plugins: plugins
+        // plugins: plugins
     };
 }
