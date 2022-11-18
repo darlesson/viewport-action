@@ -1,4 +1,4 @@
-import viewportAction from '../../src/index';
+import viewportAction from '../../src/index.ts';
 
 /**
  * Shows the dimensions found on screen. The intention is to demonstrate

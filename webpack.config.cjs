@@ -1,13 +1,13 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const path = require('node:path');
 
 module.exports = (env, argv) => {
 
-    const isDev = argv.mode === 'development';
+    const mode = argv.mode === 'development' ? argv.mode : 'production'
+    const isDev = mode === 'development';
     const libraryName = 'viewportAction';
 
-    const plugins = [new CleanWebpackPlugin()];
+    const plugins = [];
 
     const entry = {
         viewportAction: './src/index.ts'
@@ -15,22 +15,29 @@ module.exports = (env, argv) => {
 
     if (isDev) {
 
-        plugins.push(new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: './examples/index.html'
-        }));
+        const pages = ['index', 'basic'];
 
-        entry.examples = './examples/scripts/examples.js';
+        pages.forEach((page) => {
+            plugins.push(new HtmlWebpackPlugin({
+                filename: `${page}.html`,
+                template: `./examples/${page}.html`
+            }));
+
+            entry[page] = `./examples/scripts/${page}.js`;
+        });
+
+        plugins.concat(plugins);
     }
 
     return {
-        mode: argv.mode,
+        mode: mode,
 
         devtool: 'source-map',
 
         devServer: {
-            contentBase: path.join(__dirname, 'examples'),
-            index: './examples/index.html',
+            static: {
+                directory: path.join(__dirname, 'examples')
+            },
             compress: true,
             port: 9000
         },
@@ -43,7 +50,7 @@ module.exports = (env, argv) => {
             library: libraryName,
             libraryExport: 'default',
             libraryTarget: 'umd',
-            jsonpFunction: `${libraryName}_webpackJsonp`
+            chunkLoadingGlobal: `${libraryName}_webpackChunkwebpack`
         },
 
         module: {
