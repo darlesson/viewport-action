@@ -20,23 +20,23 @@ export type Callback = (e?: ViewportEvent) => void;
 const items = new Set<Item>();
 
 const defaultAddOptions = {
-    wait: 100,
+    wait: 50,
     once: false,
     document: window.document
 }
 
-const createEvent = (element: HTMLElement, e: Event, details: Detail, removeHandler: () => void) => {
+const createEvent = (element: HTMLElement, e: Event, detail: Detail, removeHandler: () => void) => {
 
     return new ViewportEvent(e, {
         target: element,
-        detail: details,
-        removeHandler: removeHandler
+        detail,
+        removeHandler
     });
 }
 
-const removeMethod = function (item: Item) {
+const removeMethod = (item: Item) => {
 
-    return function () {
+    return () => {
         
         if (items.has(item))
             items.delete(item);
@@ -50,11 +50,11 @@ const removeMethod = function (item: Item) {
  * @param element The element or selector.
  * @param defaultView The window where the element is from.
  */
-const getElement = function (element: HTMLElement | String, defaultView: Window) {
+const getElement = (element: HTMLElement | String, defaultView: Window) => {
     return (typeof element === 'string' ? defaultView.document.querySelector(element) : element) as HTMLElement;
 }
 
-const check = function (item: Item, items: Set<Item>, clientWidth: number, clientHeight: number, e?: Event) {
+const check = (item: Item, items: Set<Item>, clientWidth: number, clientHeight: number, e?: Event) => {
 
     let options = item.options,
         clientRect = item.element.getBoundingClientRect(),
@@ -69,12 +69,12 @@ const check = function (item: Item, items: Set<Item>, clientWidth: number, clien
         const availableWidth = availableRight - availableLeft;
         const availableHeight = availableBottom - availableTop;
 
-        const details: Detail = Object.freeze({
+        const detail: Detail = Object.freeze({
             // Available values
-            availableTop: availableTop,
-            availableBottom: availableBottom,
-            availableLeft: availableLeft,
-            availableRight: availableRight,
+            availableTop,
+            availableBottom,
+            availableLeft,
+            availableRight,
             availableWidth: availableRight - availableLeft,
             availableHeight: availableBottom - availableTop,
             availableArea: availableWidth * availableHeight,
@@ -87,7 +87,7 @@ const check = function (item: Item, items: Set<Item>, clientWidth: number, clien
             width: clientRect.width
         });
 
-        item.callback(createEvent(item.element, e, details, removeMethod(item)));
+        item.callback(createEvent(item.element, e, detail, removeMethod(item)));
         
         // Remove the element from the list of items as the callback is already executed
         if (options.once)
@@ -95,12 +95,12 @@ const check = function (item: Item, items: Set<Item>, clientWidth: number, clien
     }
 }
 
-const handler = function (e: Event) {
+const handler = (e: Event) => {
 
     clearTimeout(timeout);
 
     // Delay the checks
-    timeout = setTimeout(function () {
+    timeout = setTimeout(() => {
 
         let html = document.documentElement,
             clientWidth = html.clientWidth,
@@ -118,7 +118,7 @@ const handler = function (e: Event) {
             window.removeEventListener('scroll', handler, false);
         }
 
-    }, 500);
+    }, 100);
 }
 
 const viewportAction = Object.create({
@@ -132,7 +132,7 @@ const viewportAction = Object.create({
      * @param callback 
      * @param doc The optional document. It defaults to `window.document`.
      */
-    whenDocumentReady: function (callback: (defaultView?: Window, e?: Event) => void, doc: Document) {
+    whenDocumentReady: (callback: (defaultView?: Window, e?: Event) => void, doc: Document) => {
 
         // Fallback to the current document
         doc = doc && doc.nodeType === 9 ? doc : window.document;
@@ -155,7 +155,7 @@ const viewportAction = Object.create({
      * ```javascript
      * const options = {
      *     // How long it should wait to call the callback. Defaults to 0.
-     *     wait: 100,
+     *     wait: 50,
      *     // Whether to trigger the callback just once. Defaults to false.
      *     once: false,
      *     // The document the element will be checked against. Defaults to window.document.
@@ -189,8 +189,8 @@ const viewportAction = Object.create({
             }
             
             items.add({
-                element: element,
-                callback: callback,
+                element,
+                callback,
                 options: mergedOptions
             });
 
@@ -208,7 +208,7 @@ const viewportAction = Object.create({
      * @param callback The function to be executed when on viewport.
      * @param failedCallback The function to be executed when the element is not found in the document. 
      */
-    check: function (element: HTMLElement | String, callback: Callback, failedCallback: Function) {
+    check: (element: HTMLElement | String, callback: Callback, failedCallback: Function) => {
 
         element = getElement(element, window);
 
@@ -220,8 +220,8 @@ const viewportAction = Object.create({
 
         const html = document.documentElement;
         const item = {
-            element: element,
-            callback: callback,
+            element,
+            callback,
             options: {
                 wait: 0,
                 once: false

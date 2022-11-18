@@ -1,4 +1,3 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('node:path');
 
@@ -8,7 +7,6 @@ module.exports = (env, argv) => {
     const isDev = mode === 'development';
     const libraryName = 'viewportAction';
 
-    // const plugins = [new CleanWebpackPlugin()];
     const plugins = [];
 
     const entry = {
@@ -17,12 +15,18 @@ module.exports = (env, argv) => {
 
     if (isDev) {
 
-        plugins.push(new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: './examples/index.html'
-        }));
+        const pages = ['index', 'basic'];
 
-        entry.examples = './examples/scripts/examples.js';
+        pages.forEach((page) => {
+            plugins.push(new HtmlWebpackPlugin({
+                filename: `${page}.html`,
+                template: `./examples/${page}.html`
+            }));
+
+            entry[page] = `./examples/scripts/${page}.js`;
+        });
+
+        plugins.concat(plugins);
     }
 
     return {
@@ -66,6 +70,6 @@ module.exports = (env, argv) => {
             extensions: ['.ts', '.js']
         },
 
-        // plugins: plugins
+        plugins: plugins
     };
 }

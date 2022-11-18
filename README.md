@@ -39,7 +39,7 @@ import viewportAction from 'viewport-action';
 
 ```javascript
 // Using RequireJS
-require(['./src/viewportAction.min'], function (viewportAction) {
+require(['./src/viewportAction.min'], (viewportAction) => {
 
 });
 ```
@@ -55,11 +55,11 @@ You can add elements or selectors with the handlers. The `add` method waits for 
 to execute a callback when the document is ready. Only one element can be bound per handler.
 
 ```javascript
-viewportAction.add('#selector', function (e) { /* Code here */ });
+viewportAction.add('#selector', (e) => { /* Code here */ });
 
 // or
 
-viewportAction.add(document.getElementById('selector'), function (e) { /* Code here */ });
+viewportAction.add(document.getElementById('selector'), (e) => { /* Code here */ });
 ```
 
 #### The event object
@@ -124,12 +124,12 @@ Below are some options that can be passed when adding the element and handler an
 ```javascript
 const options = {
     // How long the handler will wait after the original event stops triggering.
-    wait: 100,
+    wait: 50,
     // Whether to unbind the handler after executed for the first time.
     once: false
 };
 
-viewportAction.add('#selector', function (e) { /* Code here */ }, options);
+viewportAction.add('#selector', (e) => { /* Code here */ }, options);
 ```
 
 #### Executing the handler once
@@ -141,7 +141,7 @@ const options = {
     once: true
 };
 
-viewportAction.add('#selector', function (e) {
+viewportAction.add('#selector', (e) => {
     e.target.innerText = 'Element on viewport.';
 }, options);
 ```
@@ -151,7 +151,7 @@ viewportAction.add('#selector', function (e) {
 You can allow the handler to be executed until a condition is met and only then unbind it.
 
 ```javascript
-viewportAction.add('#selector', function (e) {
+viewportAction.add('#selector', (e) => {
 
     // Load an image inside the element when the area visible is bigger
     // than 1000 pixels.
@@ -171,9 +171,9 @@ You can check whether an element is on the viewport on demand without waiting fo
 
 ```javascript
 // You can use a selector or the element itself
-viewportAction.check('#selector', function (e) {
+viewportAction.check('#selector', (e) => {
     // Code here
-}, function () {
+}, () => {
     // Optional callback handler if the element is not on the document. Just one of the
     // 2 callbacks is called.
 });

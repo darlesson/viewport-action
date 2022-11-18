@@ -4,22 +4,24 @@
     "license": "MIT",
     "version": "1.0.0",
     "description": "Provides a way with extra configuration options to execute a handler when a given element is on view.",
-    "main": "dist/viewportAction.min.js",
-    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./dist/viewportAction.min.js"
+    },
+    "module": "src/index.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "webpack --mode=production",
         "start": "webpack-dev-server --mode=development",
         "lint": "eslint src/**/*.ts",
         "prepublish": "npm run build"
     },
-    "files": [
-        "dist"
-    ],
     "devDependencies": {
         "webpack": "5.75.0",
         "webpack-cli": "4.10.0",
         "webpack-dev-server": "4.11.1",
-        "clean-webpack-plugin": "4.0.0",
         "html-webpack-plugin": "5.5.0",
         "source-map-loader": "4.0.1",
         "typescript": "4.9.3",
@@ -32,10 +34,6 @@
     },
     "directories": {
         "example": "examples"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/darlesson/viewport-action.git"
     },
     "engines": {
         "node": ">=18.12.0"
@@ -64,6 +62,10 @@
     ],
     "bugs": {
         "url": "https://github.com/darlesson/viewport-action/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/darlesson/viewport-action.git"
     },
     "homepage": "https://github.com/darlesson/viewport-action#readme"
 }
