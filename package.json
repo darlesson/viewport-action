@@ -2,7 +2,7 @@
     "name": "viewport-action",
     "author": "Darlesson Oliveira",
     "license": "MIT",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Provides a way with extra configuration options to execute a handler when a given element is on view.",
     "type": "module",
     "exports": {

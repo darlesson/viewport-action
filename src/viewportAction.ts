@@ -171,7 +171,7 @@ const viewportAction = Object.create({
      */
     add: function (element: HTMLElement | String, callback: Callback, options: Options = {}) {
 
-        const mergedOptions = {...options, ...defaultAddOptions};
+        const mergedOptions = {...defaultAddOptions, ...options};
 
         this.whenDocumentReady((defaultView: Window, e: Event) => {
 

@@ -7,10 +7,10 @@
         "experimentalDecorators": true,
         "sourceMap": true,
         "declaration": true,
-        "declarationDir": "typings",
+        "declarationDir": "./types",
         "target": "es2019",
         "outDir": "./es/",
         "esModuleInterop": true,
-        "types" : ["node"]
+        "types": ["node"]
     }
 }
